@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来画布 | 极简与美学的交汇</title>
+    <!-- 引入 Tailwind CSS 强力驱动布局 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入高级感英文字体 Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #030712;
+        }
+        /* 隐藏滚动条但保留滚动功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-gray-300 antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+    <!-- 背景弥散光效（高级感的灵魂） -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-[20%] left-[10%] w-[500px] h-[500px] rounded-full bg-indigo-600/20 blur-[120px]"></div>
+        <div class="absolute top-[10%] right-[10%] w-[400px] h-[400px] rounded-full bg-purple-600/15 blur-[100px]"></div>
+    </div>
+
+    <!-- 导航栏：玻璃拟态效果 -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-gray-950/70 border-b border-gray-800/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2 text-white font-bold text-xl tracking-tight">
+                <span class="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">AURA</span>
+                <span class="text-gray-500 font-light text-sm">DESIGN</span>
+            </a>
+            
+            <!-- Menu -->
+            <nav class="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-400">
+                <a href="#features" class="hover:text-white transition-colors duration-200">核心特性</a>
+                <a href="#showcase" class="hover:text-white transition-colors duration-200">作品案例</a>
+                <a href="#about" class="hover:text-white transition-colors duration-200">关于我们</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="flex items-center space-x-4">
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/10 rounded-full transition-all duration-300">
+                    在线咨询
+                </a>
+                <a href="#start" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-950 bg-white hover:bg-gray-100 rounded-full shadow-lg shadow-white/5 transition-all duration-300 transform hover:-translate-y-0.5">
+                    立即开始
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <!-- Hero Section（首屏：决定生死的视觉重心） -->
+        <section class="max-w-7xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28 text-center">
+            <!-- 顶部微型标签 -->
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-medium mb-8 animate-fade-in">
+                <span>✦ 2026 全新数字化美学架构</span>
+            </div>
+            
+            <!-- 主标题：渐变色 + 巨大的字号 -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.15] max-w-5xl mx-auto mb-8">
+                用设计与代码，重塑你的
+                <span class="block mt-2 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
+                    数字化品牌影响力
+                </span>
+            </h1>
+
+            <!-- 副标题：充足的行高与克制的字重 -->
+            <p class="text-base sm:text-lg md:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-12">
+                我们拒绝平庸的堆砌。为您打造兼具极致交互体验与现代视觉美学的尖端网站，让每一像素都传递出无可挑剔的专业与高级感。
+            </p>
+
+            <!-- 双按钮交互 -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 transform hover:-translate-y-1">
+                    探索解决方案
+                </a>
+                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-gray-900 text-gray-300 font-medium rounded-xl border border-gray-800 hover:border-gray-700 hover:text-white transition-all duration-300">
+                    观看演示视频 →
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section（特性卡片网格） -->
+        <section id="features" class="max-w-7xl mx-auto px-6 py-20 border-t border-gray-900">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-2xl sm:text-4xl font-bold text-white mb-4">为什么选择我们的美学标准？</h2>
+                <p class="text-gray-400 font-light text-sm sm:text-base">从底层代码架构到顶层视觉传达，不放过任何一个能够提升品牌质感的细节。</p>
+            </div>
+
+            <!-- 3列网格布局：悬浮发光与位移 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 卡片 1 -->
+                <div class="group relative bg-gray-950 border border-gray-800/80 rounded-2xl p-8 hover:border-indigo-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 002-2H3a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-3">极致响应式视网膜适配</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">完美兼容自 Ultra-Wide 4K 显示器至移动端全设备，文字锐利，图片细腻无瑕。</p>
+                </div>
+
+                <!-- 卡片 2 -->
+                <div class="group relative bg-gray-950 border border-gray-800/80 rounded-2xl p-8 hover:border-purple-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)]">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-3">60FPS 丝滑微动效</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">拒绝突兀粗暴的弹窗。采用符合人体工学的非线性缓动交互，每一次触碰都是享受。</p>
+                </div>
+
+                <!-- 卡片 3 -->
+                <div class="group relative bg-gray-950 border border-gray-800/80 rounded-2xl p-8 hover:border-pink-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(236,72,153,0.1)]">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-3">金融级安全与瞬时加载</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">纯净的底层代码，配合尖端云端加速技术，实现全球毫秒级开屏响应。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 极简页脚 -->
+    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-gray-900 text-center md:flex md:items-center md:justify-between text-xs text-gray-500">
+        <p>© 2026 AURA DESIGN. 保留所有权利。</p>
+        <div class="flex justify-center space-x-6 mt-4 md:mt-0">
+            <a href="#" class="hover:text-gray-400 transition-colors">隐私政策</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">服务条款</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">站点地图</a>
+        </div>
+    </footer>
+
+</body>
+</html>
