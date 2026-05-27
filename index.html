@@ -3,212 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luvy | </title>
+    <title>theodore · 墨香书斋</title>
+    
+    <!-- 引入古风字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500;600;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入高级感英文字体 Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --color-ink: oklch(20% 0.02 250);
+            --color-paper: oklch(98% 0.01 80);
+            --color-vermilion: oklch(65% 0.18 30);
+            --color-jade: oklch(75% 0.12 180);
+            --color-charcoal: oklch(40% 0.02 250);
+        }
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #030712;
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--color-paper);
+            color: var(--color-ink);
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4d4d4' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .handwriting {
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .monospace-cn {
+            font-family: 'ZCOOL QingKe HuangYou', monospace;
+        }
+        
+        .text-balance {
+            text-wrap: balance;
+        }
+        
+        /* 宣纸纹理 */
+        .paper-texture {
+            background-image: 
+                linear-gradient(to bottom, transparent 95%, color-mix(in oklch, var(--color-ink) 5%, transparent) 100%),
+                radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-paper) 99%, var(--color-ink)) 1px, transparent 1px);
+            background-size: 100% 40px, 20px 20px;
+        }
+        
+        /* 印章效果 */
+        .seal {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .seal::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px solid var(--color-vermilion);
+            border-radius: 0;
+            transform: rotate(2deg);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        /* 毛笔字效果 */
+        .brush-stroke {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .brush-stroke::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--color-ink), transparent);
+            opacity: 0.3;
+        }
+        
+        /* 卷轴展开动画 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px) scaleY(0.95);
+            animation: scrollReveal 1s ease-out forwards;
+        }
+        
+        @keyframes scrollReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0) scaleY(1);
+            }
+        }
+        
+        .scroll-delay-1 { animation-delay: 0.2s; }
+        .scroll-delay-2 { animation-delay: 0.4s; }
+        .scroll-delay-3 { animation-delay: 0.6s; }
+        
+        /* 墨迹扩散效果 */
+        .ink-blot {
+            position: relative;
+        }
+        
+        .ink-blot::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: radial-gradient(circle, color-mix(in oklch, var(--color-ink) 10%, transparent) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .ink-blot:hover::before {
+            opacity: 1;
+        }
+        
+        /* 线装书分隔线 */
+        .thread-binding {
+            position: relative;
+        }
+        
+        .thread-binding::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 4px,
+                color-mix(in oklch, var(--color-vermilion) 30%, transparent) 4px,
+                color-mix(in oklch, var(--color-vermilion) 30%, transparent) 6px
+            );
+        }
+        
+        /* 古风阴影 */
+        .classical-shadow {
+            box-shadow: 
+                0 4px 12px -2px color-mix(in oklch, var(--color-ink) 10%, transparent),
+                0 1px 2px -1px color-mix(in oklch, var(--color-ink) 5%, transparent);
+        }
+        
+        /* 悬停提笔效果 */
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-3px);
         }
     </style>
 </head>
-<body class="text-gray-300 antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white">
-
-    <!-- 背景弥散光效 -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[700px] pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-[10%] left-[20%] w-[600px] h-[600px] rounded-full bg-blue-600/15 blur-[130px]"></div>
-        <div class="absolute top-[20%] right-[15%] w-[500px] h-[500px] rounded-full bg-indigo-600/15 blur-[120px]"></div>
-    </div>
-
-    <!-- 导航栏 -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-gray-950/70 border-b border-gray-800/40">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-white font-bold text-lg tracking-wider">
-                ALEX.<span class="text-indigo-400">STUDIO</span>
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-400">
-                <a href="#work" class="hover:text-white transition-colors">精选作品</a>
-                <a href="#skills" class="hover:text-white transition-colors">专业领域</a>
-                <a href="#about" class="hover:text-white transition-colors">关于我</a>
-            </nav>
-
-            <div>
-                <a href="#contact" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-gray-950 bg-white hover:bg-gray-100 rounded-full transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-white/5">
-                    聊聊合作
-                </a>
+<body class="paper-texture">
+    <!-- 顶部装饰 -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-var(--color-vermilion) to-transparent opacity-20"></div>
+    
+    <!-- 导航栏 - 线装书风格 -->
+    <header class="sticky top-0 z-50 bg-color-mix(in oklch, var(--color-paper) 98%, transparent) backdrop-blur-sm border-b border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) thread-binding">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <!-- 书名签样式标识 -->
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-var(--color-vermilion) to-var(--color-jade) flex items-center justify-center classical-shadow">
+                    <span class="text-white handwriting text-lg">墨</span>
+                </div>
+                <div>
+                    <div class="text-sm text-var(--color-charcoal) monospace-cn">theodore</div>
+                    <div class="text-xs text-var(--color-charcoal) opacity-60">· 书斋</div>
+                </div>
             </div>
+            
+            <!-- 章节导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-sm hover:text-var(--color-vermilion) transition-colors relative group">
+                    <span class="brush-stroke">卷一·自叙</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-var(--color-vermilion) group-hover:w-full transition-all duration-500"></span>
+                </a>
+                <a href="#learning" class="text-sm hover:text-var(--color-vermilion) transition-colors relative group">
+                    <span class="brush-stroke">卷二·学记</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-var(--color-vermilion) group-hover:w-full transition-all duration-500"></span>
+                </a>
+                <a href="#interests" class="text-sm hover:text-var(--color-vermilion) transition-colors relative group">
+                    <span class="brush-stroke">卷三·雅趣</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-var(--color-vermilion) group-hover:w-full transition-all duration-500"></span>
+                </a>
+                <a href="#contact" class="text-sm hover:text-var(--color-vermilion) transition-colors relative group">
+                    <span class="brush-stroke">卷末·尺素</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-var(--color-vermilion) group-hover:w-full transition-all duration-500"></span>
+                </a>
+            </nav>
+            
+            <!-- GitHub 链接 -->
+            <a href="https://github.com/djw20040913" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-color-mix(in oklch, var(--color-paper) 90%, transparent) border border-color-mix(in oklch, var(--color-charcoal) 15%, transparent) hover:bg-color-mix(in oklch, var(--color-paper) 85%, transparent) transition-colors classical-shadow ink-blot">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span class="text-sm">文渊阁</span>
+            </a>
         </div>
     </header>
 
     <main class="relative z-10">
-        <!-- Hero Section (个人核心介绍) -->
-        <section class="max-w-7xl mx-auto px-6 pt-28 pb-24 md:pt-36 md:pb-32">
-            <div class="max-w-4xl">
-                <!-- 可视化在线状态 -->
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-medium mb-8">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>目前接受新项目预约 / 远程合作</span>
+        <!-- 卷首语 -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-32 text-center">
+            <div class="mb-12 scroll-reveal">
+                <div class="inline-block px-4 py-2 border border-color-mix(in oklch, var(--color-vermilion) 30%, transparent) rounded-full text-sm text-var(--color-vermilion) mb-8">
+                    <span class="opacity-80">· 在学 ·</span>
                 </div>
                 
-                <!-- 个人Title：用简练的语言定义自己 -->
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-8">
-                    我是 Alex。跨越
-                    <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">视觉美学</span> 
-                    与 <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">代码逻辑</span> 的数字手艺人。
+                <h1 class="text-5xl sm:text-6xl font-bold tracking-tight mb-8">
+                    <span class="block handwriting text-var(--color-ink)">学海无涯</span>
+                    <span class="block text-2xl sm:text-3xl text-var(--color-charcoal) font-light mt-4">勤为舟，思为楫</span>
                 </h1>
-
-                <p class="text-lg md:text-xl text-gray-400 font-light max-w-2xl leading-relaxed mb-12">
-                    独立设计师兼全栈工程师。专注于打造兼具艺术质感与极致性能的 Web 体验。在这里，代码不仅仅是实现功能的工具，更是雕刻视觉的画笔。
-                </p>
-
-                <!-- 社交/行动链接 -->
-                <div class="flex items-center space-x-6 text-sm font-medium">
-                    <a href="#work" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-colors shadow-lg shadow-indigo-600/20">
-                        浏览精选案例 ↓
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center space-x-1">
-                        <span>GitHub</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center space-x-1">
-                        <span>Dribbble</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Work Section (精选作品网格区块) -->
-        <section id="work" class="max-w-7xl mx-auto px-6 py-20 border-t border-gray-900">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
-                <div>
-                    <span class="text-xs font-bold tracking-widest text-indigo-400 uppercase block mb-3">// SELECTED WORK</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white">创造行之有效的数字体验</h2>
-                </div>
-                <p class="text-gray-400 font-light text-sm max-w-sm mt-4 md:mt-0 leading-relaxed">
-                    精选过去一年中，我同时负责 UI/UX 设计与前端全栈开发的三个核心项目。
-                </p>
-            </div>
-
-            <!-- 作品卡片流：非对称布局显得更有设计感 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 
-                <!-- 案例 1 (大尺寸/全宽或占据一格) -->
-                <div class="group relative flex flex-col justify-between bg-gray-950 border border-gray-900 rounded-2xl overflow-hidden hover:border-gray-800 transition-all duration-500">
-                    <!-- 图片容器，带悬浮放大和暗光滤镜 -->
-                    <div class="w-full aspect-[16/10] bg-gradient-to-br from-blue-900/40 to-indigo-900/40 overflow-hidden relative">
-                        <!-- 提示：实际使用时将下面这张 Unsplash 示意图换成你的项目截图 -->
-                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" 
-                             alt="Project 1" 
-                             class="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal group-hover:scale-105 transition-all duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent"></div>
-                    </div>
-                    <!-- 项目文本信息 -->
-                    <div class="p-8">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <span class="text-xs px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-medium">SaaS 系统</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium">UI/UX & React</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">NovaAnalytics — AI 驱动的数据看板</h3>
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">重新定义复杂数据的可视化形态，帮助超过 10k+ 企业用户在毫秒间捕获商业洞察。</p>
-                        <a href="#" class="text-sm font-semibold text-white flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
-                            <span>探索案例详情</span> <span>→</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 案例 2 -->
-                <div class="group relative flex flex-col justify-between bg-gray-950 border border-gray-900 rounded-2xl overflow-hidden hover:border-gray-800 transition-all duration-500">
-                    <div class="w-full aspect-[16/10] bg-gradient-to-br from-purple-900/40 to-pink-900/40 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80" 
-                             alt="Project 2" 
-                             class="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal group-hover:scale-105 transition-all duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent"></div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <span class="text-xs px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-medium">移动端 App</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-pink-500/10 text-pink-400 font-medium">Flutter / WebGL</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Aether — 沉浸式数字艺术社区</h3>
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">为新一代数字创作者打造的去中心化交流平台，运用 WebGL 实现了丝滑的 3D 流体交互。</p>
-                        <a href="#" class="text-sm font-semibold text-white flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
-                            <span>探索案例详情</span> <span>→</span>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Technical Skills Section (技能栈与服务) -->
-        <section id="skills" class="max-w-7xl mx-auto px-6 py-20 border-t border-gray-900">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div>
-                    <span class="text-xs font-bold tracking-widest text-indigo-400 uppercase block mb-3">// EXPERTISE</span>
-                    <h2 class="text-3xl font-bold text-white mb-4">全栈全流程的<br>交付能力</h2>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">
-                        我坚信最好的全栈工程师应该懂审美，最顶尖的设计师应当懂代码。这种双重背景让沟通成本降为零。
+                <div class="scroll-reveal scroll-delay-1">
+                    <p class="text-xl text-var(--color-charcoal) font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+                        一名在数字世界中求索的学子，于代码与文墨间，探寻技术与人文的交融。
+                        <span class="inline-block w-2 h-6 bg-var(--color-ink) ml-1 opacity-30 align-middle"></span>
                     </p>
                 </div>
                 
-                <!-- 技能领域 1 -->
-                <div class="space-y-6">
-                    <h3 class="text-lg font-bold text-white border-b border-gray-800 pb-3 flex items-center justify-between">
-                        <span>01 / 视觉与交互设计</span>
-                        <span class="text-xs font-normal text-indigo-400">DESIGN</span>
-                    </h3>
-                    <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>高保真 UI/UX 界面设计 (Figma)</span></li>
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>高级动效与微交互微观构建</span></li>
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>企业级三维数字化品牌视觉规范体系</span></li>
-                    </ul>
+                <!-- 书签式导航 -->
+                <div class="flex flex-wrap justify-center gap-4 scroll-reveal scroll-delay-2">
+                    <a href="#learning" class="px-6 py-3 bg-var(--color-ink) text-var(--color-paper) font-medium rounded-lg hover-lift classical-shadow flex items-center space-x-2 group">
+                        <span>观学迹</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </a>
+                    <a href="#interests" class="px-6 py-3 border border-color-mix(in oklch, var(--color-ink) 40%, transparent) text-var(--color-ink) font-medium rounded-lg hover:bg-color-mix(in oklch, var(--color-ink) 5%, transparent) transition-colors hover-lift">
+                        览雅趣
+                    </a>
                 </div>
-
-                <!-- 技能领域 2 -->
-                <div class="space-y-6">
-                    <h3 class="text-lg font-bold text-white border-b border-gray-800 pb-3 flex items-center justify-between">
-                        <span>02 / 前端与架构开发</span>
-                        <span class="text-xs font-normal text-purple-400">DEVELOPMENT</span>
-                    </h3>
-                    <ul class="space-y-3 text-sm text-gray-400 font-light">
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>React / Next.js / Vue3 生态开发</span></li>
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>GSAP / Three.js 复杂动效与WebGL</span></li>
-                        <li class="flex items-center space-x-2"><span>✦</span> <span>现代化响应式与极致性能优化 (SEO)</span></li>
-                    </ul>
+            </div>
+            
+            <!-- 闲章装饰 -->
+            <div class="mt-20 opacity-30">
+                <div class="inline-block border border-color-mix(in oklch, var(--color-vermilion) 20%, transparent) p-4 rotate-3">
+                    <div class="text-xs monospace-cn text-var(--color-charcoal) opacity-70">theodore · 癸卯年冬</div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA / Contact Section (带你开启新项目) -->
-        <section id="contact" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-900 text-center relative overflow-hidden rounded-3xl bg-gradient-to-b from-gray-950 to-black my-12">
-            <div class="relative z-10 max-w-2xl mx-auto">
-                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                    准备好开始你的<br><span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">下一个现象级项目</span>了吗？
-                </h2>
-                <p class="text-gray-400 text-sm sm:text-base font-light mb-10 leading-relaxed">
-                    无论你是一个初创点子需要从零构建产品，还是既有品牌想要进行数字美学升级，我都可以为你提供一站式设计与技术支持。
+        <!-- 卷一·自叙 -->
+        <section id="about" class="max-w-4xl mx-auto px-4 sm:px-6 py-24 border-t border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+            <div class="flex items-start justify-between mb-12 scroll-reveal">
+                <div>
+                    <span class="text-xs font-bold tracking-widest text-var(--color-vermilion) uppercase block mb-3">卷一·自叙</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-var(--color-ink)">关于此间</h2>
+                </div>
+                <div class="text-right hidden sm:block">
+                    <div class="text-sm text-var(--color-charcoal) opacity-70 max-w-xs">
+                        此身虽在数字世，心向古风慕雅言
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-6 scroll-reveal scroll-delay-1">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-var(--color-charcoal) leading-relaxed">
+                            我是 <span class="font-semibold text-var(--color-ink)">theodore</span>，一名在校大学生。
+                        </p>
+                        <p class="text-var(--color-charcoal) leading-relaxed mt-4">
+                            虽身处信息时代，却对古典美学情有独钟。相信技术不应冰冷，代码亦可如诗。
+                        </p>
+                        <p class="text-var(--color-charcoal) leading-relaxed mt-4">
+                            正在学习现代 Web 技术，尝试在数字世界中融入传统文人的雅致与韵味。
+                        </p>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+                        <div class="text-sm text-var(--color-charcoal) opacity-80">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span>📍</span>
+                                <span>求学中</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span>🎯</span>
+                                <span>探索前端开发与古典美学的结合</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-reveal scroll-delay-2">
+                    <div class="bg-gradient-to-br from-color-mix(in oklch, var(--color-paper) 95%, transparent) to-color-mix(in oklch, var(--color-paper) 90%, transparent) rounded-xl p-8 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+                        <h3 class="text-lg font-bold text-var(--color-ink) mb-4 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-var(--color-vermilion) opacity-20 mr-2"></span>
+                            当下心境
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-vermilion) text-lg">·</span>
+                                <span class="text-var(--color-charcoal)">广涉猎，精一艺</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-vermilion) text-lg">·</span>
+                                <span class="text-var(--color-charcoal)">以代码为笔，书写数字诗篇</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-vermilion) text-lg">·</span>
+                                <span class="text-var(--color-charcoal)">在传统与现代间架设桥梁</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 卷二·学记 -->
+        <section id="learning" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-xs font-bold tracking-widest text-var(--color-jade) uppercase block mb-3">卷二·学记</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-var(--color-ink) mb-6">求学之路</h2>
+                <p class="text-var(--color-charcoal) max-w-2xl mx-auto">
+                    如初春之苗，不见其增，日有所长
                 </p>
-                <a href="mailto:alex@example.com" class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-950 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 shadow-xl shadow-white/5">
-                    发送邮件联络我
+            </div>
+
+            <!-- 学习路径 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center scroll-reveal scroll-delay-1">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-jade) 20%, transparent) to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
+                        <span class="text-2xl handwriting text-var(--color-jade)">基</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-3">基础筑实</h3>
+                    <div class="space-y-2 text-sm text-var(--color-charcoal)">
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>HTML/CSS</span>
+                            <span class="text-xs text-var(--color-jade)">· 掌握</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>JavaScript</span>
+                            <span class="text-xs text-var(--color-jade)">· 学习</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>Git</span>
+                            <span class="text-xs text-var(--color-jade)">· 入门</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center scroll-reveal scroll-delay-2">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-vermilion) 20%, transparent) to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
+                        <span class="text-2xl handwriting text-var(--color-vermilion)">进</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-3">正在探索</h3>
+                    <div class="space-y-2 text-sm text-var(--color-charcoal)">
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>前端框架</span>
+                            <span class="text-xs text-var(--color-vermilion)">· React/Vue</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>响应式设计</span>
+                            <span class="text-xs text-var(--color-vermilion)">· 实践</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>UI/UX 原理</span>
+                            <span class="text-xs text-var(--color-vermilion)">· 了解</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center scroll-reveal scroll-delay-3">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-charcoal) 20%, transparent) to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
+                        <span class="text-2xl handwriting text-var(--color-charcoal)">望</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-3">未来方向</h3>
+                    <div class="space-y-2 text-sm text-var(--color-charcoal)">
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>全栈开发</span>
+                            <span class="text-xs text-var(--color-charcoal)">· 目标</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>性能优化</span>
+                            <span class="text-xs text-var(--color-charcoal)">· 深入</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span>开源贡献</span>
+                            <span class="text-xs text-var(--color-charcoal)">· 期待</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 学习笔记 -->
+            <div class="mt-20 scroll-reveal">
+                <div class="bg-gradient-to-b from-color-mix(in oklch, var(--color-paper) 98%, transparent) to-color-mix(in oklch, var(--color-paper) 96%, transparent) rounded-xl p-8 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+                    <h3 class="text-lg font-bold text-var(--color-ink) mb-6 flex items-center">
+                        <span class="w-6 h-6 rounded-full bg-var(--color-jade) opacity-20 mr-2"></span>
+                        学习随想
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-jade) text-xl mt-1">〰</span>
+                                <div>
+                                    <div class="font-medium text-var(--color-ink)">理解优先于记忆</div>
+                                    <div class="text-sm text-var(--color-charcoal) opacity-80 mt-1">代码背后的原理比语法更重要</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-jade) text-xl mt-1">〰</span>
+                                <div>
+                                    <div class="font-medium text-var(--color-ink)">小步快跑</div>
+                                    <div class="text-sm text-var(--color-charcoal) opacity-80 mt-1">每天进步一点点，积跬步以至千里</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-jade) text-xl mt-1">〰</span>
+                                <div>
+                                    <div class="font-medium text-var(--color-ink)">实践出真知</div>
+                                    <div class="text-sm text-var(--color-charcoal) opacity-80 mt-1">亲手写代码是最好的学习方式</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-var(--color-jade) text-xl mt-1">〰</span>
+                                <div>
+                                    <div class="font-medium text-var(--color-ink)">保持好奇</div>
+                                    <div class="text-sm text-var(--color-charcoal) opacity-80 mt-1">对新技术保持开放心态</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 卷三·雅趣 -->
+        <section id="interests" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 scroll-reveal">
+                <div class="md:w-2/3">
+                    <span class="text-xs font-bold tracking-widest text-var(--color-vermilion) uppercase block mb-3">卷三·雅趣</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-var(--color-ink) mb-4">技术之外的天地</h2>
+                    <p class="text-var(--color-charcoal)">
+                        代码之外，亦有诗书茶画，风月闲情
+                    </p>
+                </div>
+            </div>
+
+            <!-- 兴趣网格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-color-mix(in oklch, var(--color-paper) 96%, transparent) to-color-mix(in oklch, var(--color-paper) 92%, transparent) rounded-xl p-6 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) hover-lift scroll-reveal">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-vermilion) 15%, transparent) to-transparent flex items-center justify-center mb-4">
+                        <span class="text-xl handwriting text-var(--color-vermilion)">书</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-2">古典文学</h3>
+                    <p class="text-sm text-var(--color-charcoal) opacity-80">
+                        诗词歌赋，古文观止，在文字间感受千年文脉
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-color-mix(in oklch, var(--color-paper) 96%, transparent) to-color-mix(in oklch, var(--color-paper) 92%, transparent) rounded-xl p-6 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) hover-lift scroll-reveal scroll-delay-1">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-jade) 15%, transparent) to-transparent flex items-center justify-center mb-4">
+                        <span class="text-xl handwriting text-var(--color-jade)">墨</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-2">传统美学</h3>
+                    <p class="text-sm text-var(--color-charcoal) opacity-80">
+                        书法、绘画、园林，东方美学的现代表达
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-color-mix(in oklch, var(--color-paper) 96%, transparent) to-color-mix(in oklch, var(--color-paper) 92%, transparent) rounded-xl p-6 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) hover-lift scroll-reveal scroll-delay-2">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-charcoal) 15%, transparent) to-transparent flex items-center justify-center mb-4">
+                        <span class="text-xl handwriting text-var(--color-charcoal)">思</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-2">哲学思考</h3>
+                    <p class="text-sm text-var(--color-charcoal) opacity-80">
+                        中西方哲学，技术伦理，数字时代的人文关怀
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-color-mix(in oklch, var(--color-paper) 96%, transparent) to-color-mix(in oklch, var(--color-paper) 92%, transparent) rounded-xl p-6 classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) hover-lift scroll-reveal scroll-delay-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-color-mix(in oklch, var(--color-vermilion) 15%, transparent) to-transparent flex items-center justify-center mb-4">
+                        <span class="text-xl handwriting text-var(--color-vermilion)">创</span>
+                    </div>
+                    <h3 class="font-bold text-var(--color-ink) mb-2">创意实验</h3>
+                    <p class="text-sm text-var(--color-charcoal) opacity-80">
+                        将古典元素融入现代界面设计，探索文化传承的新形式
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 卷末·尺素 -->
+        <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
+            <div class="relative rounded-2xl overflow-hidden classical-shadow border border-color-mix(in oklch, var(--color-charcoal) 15%, transparent) p-8 sm:p-12 bg-gradient-to-b from-color-mix(in oklch, var(--color-paper) 98%, transparent) to-color-mix(in oklch, var(--color-paper) 96%, transparent)">
+                <div class="relative z-10">
+                    <span class="text-xs font-bold tracking-widest text-var(--color-jade) uppercase block mb-3">卷末·尺素</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-var(--color-ink) mb-6">
+                        有朋自远方来，<span class="handwriting text-var(--color-vermilion)">不亦乐乎</span>
+                    </h2>
+                    <p class="text-var(--color-charcoal) mb-10 max-w-2xl mx-auto">
+                        若你也对古典美学与现代技术的结合感兴趣，或想交流学习心得，欢迎来信。
+                        虽为后学，愿与君共论数字时代的文心雕龙。
+                    </p>
+                    <a href="mailto:djw20040913@qq.com" class="inline-flex items-center justify-center px-8 py-4 bg-var(--color-ink) text-var(--color-paper) font-semibold rounded-lg hover-lift classical-shadow group ink-blot">
+                        <span>展笺致意</span>
+                        <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 信笺装饰 -->
+                <div class="absolute top-4 right-4 opacity-20">
+                    <div class="text-xs monospace-cn rotate-12">飞鸿传书</div>
+                </div>
+            </div>
+            
+            <!-- 社交链接 -->
+            <div class="mt-12 flex justify-center space-x-8">
+                <a href="https://github.com/djw20040913" class="text-var(--color-charcoal) hover:text-var(--color-ink) transition-colors flex items-center space-x-2">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://djw20040913.github.io" class="text-var(--color-charcoal) hover:text-var(--color-ink) transition-colors flex items-center space-x-2">
+                    <span>个人页</span>
                 </a>
             </div>
         </section>
     </main>
 
     <!-- 页脚 -->
-    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-gray-900 text-center md:flex md:items-center md:justify-between text-xs text-gray-500">
-        <p>© 2026 ALEX.STUDIO. Built with Passion & Code.</p>
-        <div class="flex justify-center space-x-6 mt-4 md:mt-0">
-            <a href="#" class="hover:text-gray-400 transition-colors">GitHub</a>
-            <a href="#" class="hover:text-gray-400 transition-colors">Dribbble</a>
-            <a href="#" class="hover:text-gray-400 transition-colors">LinkedIn</a>
+    <footer class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-color-mix(in oklch, var(--color-charcoal) 10%, transparent) text-sm text-var(--color-charcoal) opacity-70">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 flex items-center space-x-2">
+                <div class="w-5 h-5 rounded-full bg-gradient-to-br from-var(--color-vermilion) to-var(--color-jade) opacity-30"></div>
+                <span>theodore · 癸卯年冬 于书斋</span>
+            </div>
+            <div class="text-xs opacity-60">
+                以代码续文脉，用技术传雅韵
+            </div>
         </div>
     </footer>
 
+    <script>
+        // 卷轴展开动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrolls = document.querySelectorAll('.scroll-reveal');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            scrolls.forEach(scroll => observer.observe(scroll));
+            
+            // 墨迹效果
+            const inkBlots = document.querySelectorAll('.ink-blot');
+            inkBlots.forEach(blot => {
+                blot.addEventListener('mouseenter', () => {
+                    blot.style.transform = 'scale(1.02)';
+                });
+                blot.addEventListener('mouseleave', () => {
+                    blot.style.transform = 'scale(1)';
+                });
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 毛笔字悬停效果
+            const brushStrokes = document.querySelectorAll('.brush-stroke');
+            brushStrokes.forEach(stroke => {
+                stroke.addEventListener('mouseenter', () => {
+                    stroke.style.letterSpacing = '1px';
+                });
+                stroke.addEventListener('mouseleave', () => {
+                    stroke.style.letterSpacing = 'normal';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
