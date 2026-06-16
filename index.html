@@ -636,17 +636,18 @@
             addEventListener('mousemove', e => { px = mx; py = my; mx = e.clientX; my = e.clientY; });
 
             function frame() {
-                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = 'oklch(98% 0.01 80 / 0.15)';
+                ctx.fillRect(0, 0, W, H);
 
                 if (mx > 0 && Math.hypot(mx - px, my - py) > 3) {
-                    const steps = Math.min(Math.ceil(Math.hypot(mx - px, my - py) / 4), 16);
+                    const steps = Math.min(Math.ceil(Math.hypot(mx - px, my - py) / 3), 20);
                     for (let i = 0; i <= steps; i++) {
                         const t = i / steps;
                         const x = px + (mx - px) * t, y = py + (my - py) * t;
-                        const r = 25 + Math.random() * 25;
+                        const r = 20 + Math.random() * 30;
                         const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-                        g.addColorStop(0, 'oklch(20% 0.02 250 / 0.02)');
-                        g.addColorStop(0.5, 'oklch(20% 0.02 250 / 0.006)');
+                        g.addColorStop(0, 'oklch(20% 0.02 250 / 0.06)');
+                        g.addColorStop(0.5, 'oklch(20% 0.02 250 / 0.025)');
                         g.addColorStop(1, 'oklch(20% 0.02 250 / 0)');
                         ctx.fillStyle = g;
                         ctx.beginPath();
