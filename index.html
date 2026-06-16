@@ -184,6 +184,8 @@
     </style>
 </head>
 <body class="paper-texture">
+    <!-- 壁纸背景层 -->
+    <div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.3;background:url('background.png') center/cover fixed no-repeat;"></div>
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right, transparent, var(--color-vermilion), transparent);opacity:0.2"></div>
 
     <header class="sticky top-0 z-50 thread-binding" style="background-color:color-mix(in oklch, var(--color-paper) 98%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
@@ -634,7 +636,7 @@
             addEventListener('mousemove', e => { px = mx; py = my; mx = e.clientX; my = e.clientY; });
 
             function frame() {
-                ctx.fillStyle = 'oklch(98% 0.01 80 / 0.012)';
+                ctx.fillStyle = 'oklch(98% 0.01 80 / 0.025)';
                 ctx.fillRect(0, 0, W, H);
 
                 if (mx > 0 && Math.hypot(mx - px, my - py) > 3) {
