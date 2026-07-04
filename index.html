@@ -8,13 +8,10 @@
 
     <!-- 预加载 LCP 关键资源 -->
     <link rel="preload" href="background.png" as="image" fetchpriority="high">
+    <!-- 装饰字体（仅用于标题书法效果） -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- LCP 关键字体：阻塞加载以确保 LCP 文本尽快渲染 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap">
-    <!-- 非关键字体延迟加载 -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+QingKe+HuangYou&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+QingKe+HuangYou&display=swap"></noscript>
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,444 +20,260 @@
             theme: {
                 extend: {
                     colors: {
-                        ink: 'oklch(20% 0.02 250)',
-                        paper: 'oklch(98% 0.01 80)',
-                        vermilion: 'oklch(65% 0.18 30)',
-                        jade: 'oklch(75% 0.12 180)',
-                        charcoal: 'oklch(40% 0.02 250)',
+                        ink: '#2c2c2c',
+                        paper: '#fdfbf7',
+                        vermilion: '#b22c2c',
+                        charcoal: '#555555',
                     }
                 }
             }
         }
     </script>
 
-    <style>
-        :root {
-            --color-ink: oklch(20% 0.02 250);
-            --color-paper: oklch(98% 0.01 80);
-            --color-vermilion: oklch(65% 0.18 30);
-            --color-jade: oklch(75% 0.12 180);
-            --color-charcoal: oklch(40% 0.02 250);
-        }
-
-        body {
-            font-family: 'Noto Serif SC', serif;
-            background-color: var(--color-paper);
-            color: var(--color-ink);
-            background-image:
-                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4d4d4' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-        }
-
-        .handwriting {
-            font-family: 'Ma Shan Zheng', cursive;
-        }
-
-        .monospace-cn {
-            font-family: 'ZCOOL QingKe HuangYou', monospace;
-        }
-
-        .text-balance {
-            text-wrap: balance;
-        }
-
-        .paper-texture {
-            background-image:
-                linear-gradient(to bottom, transparent 95%, color-mix(in oklch, var(--color-ink) 5%, transparent) 100%),
-                radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-paper) 99%, var(--color-ink)) 1px, transparent 1px);
-            background-size: 100% 40px, 20px 20px;
-        }
-
-        .seal {
-            position: relative;
-            display: inline-block;
-        }
-
-        .seal::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border: 2px solid var(--color-vermilion);
-            border-radius: 0;
-            transform: rotate(2deg);
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .brush-stroke {
-            position: relative;
-            display: inline-block;
-        }
-
-        .brush-stroke::before {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--color-ink), transparent);
-            opacity: 0.3;
-        }
-
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px) scaleY(0.95);
-            animation: scrollReveal 1s ease-out forwards;
-        }
-
-        @keyframes scrollReveal {
-            to {
-                opacity: 1;
-                transform: translateY(0) scaleY(1);
-            }
-        }
-
-        .scroll-delay-1 { animation-delay: 0.2s; }
-        .scroll-delay-2 { animation-delay: 0.4s; }
-        .scroll-delay-3 { animation-delay: 0.6s; }
-
-        .ink-blot {
-            position: relative;
-        }
-
-        .ink-blot::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            background: radial-gradient(circle, color-mix(in oklch, var(--color-ink) 10%, transparent) 0%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .ink-blot:hover::before {
-            opacity: 1;
-        }
-
-        .thread-binding {
-            position: relative;
-        }
-
-        .thread-binding::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent,
-                transparent 4px,
-                color-mix(in oklch, var(--color-vermilion) 30%, transparent) 4px,
-                color-mix(in oklch, var(--color-vermilion) 30%, transparent) 6px
-            );
-        }
-
-        .classical-shadow {
-            box-shadow:
-                0 4px 12px -2px color-mix(in oklch, var(--color-ink) 10%, transparent),
-                0 1px 2px -1px color-mix(in oklch, var(--color-ink) 5%, transparent);
-        }
-
-        .hover-lift {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-3px);
-        }
-
-        .avatar-inkwash {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 35%, color-mix(in oklch, var(--color-ink) 15%, transparent) 0%, transparent 60%);
-            border: 1px solid color-mix(in oklch, var(--color-vermilion) 20%, transparent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 2.5rem;
-            color: var(--color-ink);
-            opacity: 0.8;
-        }
-
-        /* 视口外区域延迟渲染，减少首屏工作量 */
-        .defer-render {
-            content-visibility: auto;
-            contain-intrinsic-size: auto 800px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="paper-texture">
     <!-- 壁纸背景层 -->
-    <div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.3;background:url('background.png') center/cover fixed no-repeat;"></div>
-    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right, transparent, var(--color-vermilion), transparent);opacity:0.2"></div>
+    <div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.15;background:url('background.png') center/cover fixed no-repeat;"></div>
 
-    <header class="sticky top-0 z-50 thread-binding" style="background-color:color-mix(in oklch, var(--color-paper) 98%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid color-mix(in oklch, var(--color-charcoal) 10%, transparent)">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-vermilion to-jade flex items-center justify-center classical-shadow">
-                    <span class="text-white handwriting text-lg">墨</span>
+    <header class="sticky top-0 z-50" style="background-color:rgba(253,251,247,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,44,44,0.06)">
+        <div class="max-w-[1000px] mx-auto px-6 h-16 flex items-center justify-between">
+            <!-- Logo + 名字 -->
+            <a href="#" class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, #b22c2c, #2c2c2c)">
+                    <span class="text-white handwriting text-base">墨</span>
                 </div>
-                <div>
-                    <div class="text-sm text-charcoal monospace-cn">theodore</div>
-                    <div class="text-xs text-charcoal opacity-60">· 书斋</div>
-                </div>
-            </div>
+                <span class="text-sm font-semibold tracking-wide" style="color:var(--color-ink)">theodore</span>
+            </a>
 
+            <!-- 桌面端菜单 -->
             <nav class="hidden md:flex items-center space-x-8">
-                <a href="#about" class="text-sm hover:text-vermilion transition-colors relative group">
-                    <span class="brush-stroke">卷一·自叙</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-vermilion group-hover:w-full transition-all duration-500"></span>
-                </a>
-                <a href="#learning" class="text-sm hover:text-vermilion transition-colors relative group">
-                    <span class="brush-stroke">卷二·学记</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-vermilion group-hover:w-full transition-all duration-500"></span>
-                </a>
-                <a href="#interests" class="text-sm hover:text-vermilion transition-colors relative group">
-                    <span class="brush-stroke">卷三·雅趣</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-vermilion group-hover:w-full transition-all duration-500"></span>
-                </a>
-                <a href="#contact" class="text-sm hover:text-vermilion transition-colors relative group">
-                    <span class="brush-stroke">卷末·尺素</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-px bg-vermilion group-hover:w-full transition-all duration-500"></span>
-                </a>
+                <a href="#about" class="nav-link text-sm" style="color:var(--color-charcoal)">卷一·自叙</a>
+                <a href="#learning" class="nav-link text-sm" style="color:var(--color-charcoal)">卷二·学记</a>
+                <a href="#interests" class="nav-link text-sm" style="color:var(--color-charcoal)">卷三·雅趣</a>
+                <a href="#contact" class="nav-link text-sm" style="color:var(--color-charcoal)">卷末·尺素</a>
             </nav>
 
-            <a href="https://github.com/djw20040913" class="flex items-center space-x-2 px-4 py-2 rounded-lg classical-shadow ink-blot" style="background-color:color-mix(in oklch, var(--color-paper) 90%, transparent);border:1px solid color-mix(in oklch, var(--color-charcoal) 15%, transparent)">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-                <span class="text-sm">文渊阁</span>
+            <div class="flex items-center space-x-4">
+                <a href="https://github.com/daijw20040913" class="hidden md:flex items-center text-sm hover:text-vermilion transition-colors" style="color:var(--color-charcoal)">
+                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <!-- 移动端汉堡按钮 -->
+                <button id="menu-toggle" class="md:hidden p-1" aria-label="菜单">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- 移动端下拉菜单 -->
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+            <a href="#about" class="text-sm py-1" style="color:var(--color-charcoal)">卷一·自叙</a>
+            <a href="#learning" class="text-sm py-1" style="color:var(--color-charcoal)">卷二·学记</a>
+            <a href="#interests" class="text-sm py-1" style="color:var(--color-charcoal)">卷三·雅趣</a>
+            <a href="#contact" class="text-sm py-1" style="color:var(--color-charcoal)">卷末·尺素</a>
+            <a href="https://github.com/daijw20040913" class="text-sm py-1 flex items-center" style="color:var(--color-charcoal)">
+                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
             </a>
         </div>
     </header>
 
     <main class="relative z-10">
-        <!-- 卷首语 -->
-        <section class="max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-32 text-center">
-            <div class="mb-12 scroll-reveal">
-                <div class="inline-block px-4 py-2 border border-vermilion/30 rounded-full text-sm text-vermilion mb-8">
-                    <span class="opacity-80">· 在学 ·</span>
-                </div>
-
-                <h1 class="text-5xl sm:text-6xl font-bold tracking-tight mb-8">
-                    <span class="block handwriting text-ink">学海无涯</span>
-                    <span class="block text-2xl sm:text-3xl text-charcoal font-light mt-4">勤为舟，思为楫</span>
-                </h1>
-
-                <div class="scroll-reveal scroll-delay-1">
-                    <p class="text-xl text-charcoal font-light leading-relaxed mb-10 max-w-2xl mx-auto">
-                        一名在数字世界中求索的学子，于代码与文墨间，探寻技术与人文的交融。
-                        <span class="inline-block w-2 h-6 bg-ink ml-1 opacity-30 align-middle"></span>
-                    </p>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-4 scroll-reveal scroll-delay-2">
-                    <a href="#learning" class="px-6 py-3 bg-ink text-paper font-medium rounded-lg hover-lift classical-shadow flex items-center space-x-2 group">
-                        <span>观学迹</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                        </svg>
-                    </a>
-                    <a href="#interests" class="px-6 py-3 border border-ink/40 text-ink font-medium rounded-lg hover-lift transition-colors" style="background-color:color-mix(in oklch, var(--color-ink) 5%, var(--color-paper))">
-                        览雅趣
-                    </a>
-                </div>
+        <!-- 首屏 Hero -->
+        <section class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center">
+            <div class="hero-fade-in hero-fade-in-d1 mb-6">
+                <span class="inline-block px-3 py-1 text-xs tracking-widest rounded-full" style="border:1px solid rgba(44,44,44,0.15);color:var(--color-charcoal)">· 在学 ·</span>
             </div>
 
-            <div class="mt-20 opacity-30">
-                <div class="inline-block p-4 rotate-3" style="border:1px solid color-mix(in oklch, var(--color-vermilion) 20%, transparent)">
-                    <div class="text-xs monospace-cn text-charcoal opacity-70">theodore · 癸卯年冬</div>
-                </div>
+            <h1 class="hero-fade-in hero-fade-in-d2">
+                <span class="block text-5xl sm:text-6xl md:text-7xl font-bold tracking-[0.15em] handwriting" style="color:var(--color-ink)">学海无涯</span>
+            </h1>
+
+            <div class="hero-fade-in hero-fade-in-d3 mt-8 mb-12 max-w-lg">
+                <p class="text-sm sm:text-base mb-3" style="color:var(--color-charcoal);letter-spacing:0.08em">
+                    全栈开发者 · 独立创作者 · 技术写作者
+                </p>
+                <p class="text-base sm:text-lg leading-relaxed" style="color:var(--color-ink);opacity:0.75">
+                    于代码逻辑中构建秩序，于文墨光影间探寻自由。
+                </p>
+            </div>
+
+            <div class="hero-fade-in hero-fade-in-d4 flex flex-wrap justify-center gap-4">
+                <a href="#about" class="px-7 py-3 text-sm font-medium rounded-lg transition-all hover:opacity-90" style="background:var(--color-ink);color:var(--color-paper)">
+                    阅览履历
+                </a>
+                <a href="#learning" class="px-7 py-3 text-sm font-medium rounded-lg transition-all hover:bg-gray-50" style="border:1px solid rgba(44,44,44,0.2);color:var(--color-ink)">
+                    查看作品
+                </a>
             </div>
         </section>
 
         <!-- 卷一·自叙 -->
-        <section id="about" class="defer-render max-w-4xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
-            <div class="flex items-start justify-between mb-12 scroll-reveal">
-                <div>
-                    <span class="text-xs font-bold tracking-widest text-vermilion uppercase block mb-3">卷一·自叙</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">关于此间</h2>
-                </div>
-                <div class="text-right hidden sm:block">
-                    <div class="text-sm text-charcoal opacity-70 max-w-xs">
-                        此身虽在数字世，心向古风慕雅言
-                    </div>
-                </div>
+        <section id="about" class="defer-render max-w-[1000px] mx-auto px-6 py-24">
+            <div class="scroll-reveal mb-12">
+                <span class="text-xs font-semibold tracking-[0.2em] block mb-3" style="color:var(--color-vermilion)">卷一 · 自叙</span>
+                <h2 class="text-3xl sm:text-4xl font-bold" style="color:var(--color-ink)">关于此间</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <article class="space-y-6 scroll-reveal scroll-delay-1">
-                    <div class="prose prose-lg max-w-none">
-                        <p class="text-charcoal leading-relaxed">
-                            我是 <span class="font-semibold text-ink">theodore</span>，一名在校大学生。
-                        </p>
-                        <p class="text-charcoal leading-relaxed mt-4">
-                            虽身处信息时代，却对古典美学情有独钟。相信技术不应冰冷，代码亦可如诗。
-                        </p>
-                        <p class="text-charcoal leading-relaxed mt-4">
-                            正在学习现代 Web 技术，尝试在数字世界中融入传统文人的雅致与韵味。
-                        </p>
-                    </div>
-
-                    <div class="pt-6 border-t border-charcoal/10">
-                        <div class="text-sm text-charcoal opacity-80">
-                            <div class="flex items-center space-x-2 mb-2">
-                                <span>📍</span>
-                                <span>求学中</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span>🎯</span>
-                                <span>探索前端开发与古典美学的结合</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
+                <!-- 左侧：文言自述 -->
+                <article class="md:col-span-3 space-y-5 scroll-reveal scroll-delay-1">
+                    <p class="leading-[2] text-[15px]" style="color:var(--color-charcoal)">
+                        少好格物，长而笃志于算学机巧。尝诵先贤之典，通组成、网络、数据结构之要义，明操作系统之枢机，每有会意，便欣然忘食。
+                    </p>
+                    <p class="leading-[2] text-[15px]" style="color:var(--color-charcoal)">
+                        及至弱冠，负笈泰岳，修计算机之术。于课业之余，尤好探大模型之幽微。观今之智械，虽能言善辩，然于算法逻辑，常有疏漏，或生"幻觉"，或陷悖谬。余乃以科班之基，设难考辨，纠其偏颇，累计正谬误十五余处，使稀疏图之准度，自七二升至八九，此诚践行"知行合一"之乐也。
+                    </p>
+                    <p class="leading-[2] text-[15px]" style="color:var(--color-charcoal)">
+                        亦曾构健身房管理系统，以 SpringBoot 为骨，Vue 为衣，化繁为简，行数字化之便。又常游刃于 Python、Linux、Git 之间，善写 Prompt 以导推理，长于清洗比对以净语料，心性细密，不惮烦琐。
+                    </p>
+                    <p class="leading-[2] text-[15px]" style="color:var(--color-charcoal)">
+                        余之所趣，不在浮名。蓝桥一奖，偶得之耳；CET 之证，亦为览西文技术文档之阶。平日好读博弈论与认知之书，喜探物理硬件底层之奥，以为万物皆有理，理在毫末间。又嗜长跑、骑行，盖取"绵绵若存，用之不勤"之意，于往复中炼专注，于长途里守恒常。
+                    </p>
+                    <p class="leading-[2] text-[15px] font-medium" style="color:var(--color-ink)">
+                        今既栖身于智识之林，愿效前贤格物致知，以逻辑为尺，以数据为鉴，助大模型去伪存真，还算法以清明。此间乐，不足为外人道也。
+                    </p>
+                    <p class="text-xs pt-2" style="color:var(--color-charcoal);opacity:0.5;letter-spacing:0.15em">—— 是为自述</p>
                 </article>
 
-                <div class="scroll-reveal scroll-delay-2 flex flex-col items-center md:items-start">
-                    <!-- 水墨头像装饰 -->
-                    <div class="avatar-inkwash mb-8">
-                        T
-                    </div>
-                    <div class="bg-gradient-to-br from-paper/95 to-paper/90 rounded-xl p-8 classical-shadow border border-charcoal/10 w-full">
-                        <h3 class="text-lg font-bold text-ink mb-4 flex items-center">
-                            <span class="w-6 h-6 rounded-full bg-vermilion opacity-20 mr-2"></span>
-                            当下心境
+                <!-- 右侧：速览卡片 -->
+                <aside class="md:col-span-2 scroll-reveal scroll-delay-2 space-y-5">
+                    <!-- 身份 -->
+                    <div class="rounded-xl p-6 classical-shadow" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                        <h3 class="font-bold mb-4 text-sm flex items-center" style="color:var(--color-ink)">
+                            <span class="w-2 h-2 rounded-full mr-2" style="background:var(--color-vermilion)"></span>
+                            身份
                         </h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-3">
-                                <span class="text-vermilion text-lg">·</span>
-                                <span class="text-charcoal">广涉猎，精一艺</span>
+                        <div class="space-y-2.5 text-sm" style="color:var(--color-charcoal)">
+                            <div>在校 · 计算机科学</div>
+                            <div>全栈开发者 · 独立创作者</div>
+                        </div>
+                    </div>
+
+                    <!-- 技术栈 -->
+                    <div class="rounded-xl p-6 classical-shadow" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                        <h3 class="font-bold mb-4 text-sm flex items-center" style="color:var(--color-ink)">
+                            <span class="w-2 h-2 rounded-full mr-2" style="background:var(--color-vermilion)"></span>
+                            所长
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(44,44,44,0.05);color:var(--color-ink)">Python</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(44,44,44,0.05);color:var(--color-ink)">SpringBoot</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(44,44,44,0.05);color:var(--color-ink)">Vue</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(44,44,44,0.05);color:var(--color-ink)">Linux</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(44,44,44,0.05);color:var(--color-ink)">Git</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(178,44,44,0.08);color:var(--color-vermilion)">Prompt 工程</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(178,44,44,0.08);color:var(--color-vermilion)">数据清洗</span>
+                            <span class="px-2.5 py-1 text-xs rounded-md" style="background:rgba(178,44,44,0.08);color:var(--color-vermilion)">大模型评测</span>
+                        </div>
+                    </div>
+
+                    <!-- 志趣 -->
+                    <div class="rounded-xl p-6 classical-shadow" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                        <h3 class="font-bold mb-4 text-sm flex items-center" style="color:var(--color-ink)">
+                            <span class="w-2 h-2 rounded-full mr-2" style="background:var(--color-vermilion)"></span>
+                            志趣
+                        </h3>
+                        <div class="space-y-2.5 text-sm" style="color:var(--color-charcoal)">
+                            <div class="flex items-start space-x-2">
+                                <span style="color:var(--color-vermilion)">·</span>
+                                <span>博弈论 · 认知科学 · 硬件底层</span>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <span class="text-vermilion text-lg">·</span>
-                                <span class="text-charcoal">以代码为笔，书写数字诗篇</span>
+                            <div class="flex items-start space-x-2">
+                                <span style="color:var(--color-vermilion)">·</span>
+                                <span>长跑 · 骑行</span>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <span class="text-vermilion text-lg">·</span>
-                                <span class="text-charcoal">在传统与现代间架设桥梁</span>
+                            <div class="flex items-start space-x-2">
+                                <span style="color:var(--color-vermilion)">·</span>
+                                <span>以逻辑为尺，助大模型去伪存真</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div>
         </section>
 
         <!-- 卷二·学记 -->
-        <section id="learning" class="defer-render max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
+        <section id="learning" class="defer-render max-w-[1000px] mx-auto px-6 py-24" style="border-top:1px solid rgba(44,44,44,0.06)">
             <div class="text-center mb-16 scroll-reveal">
-                <span class="text-xs font-bold tracking-widest text-jade uppercase block mb-3">卷二·学记</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-ink mb-6">求学之路</h2>
-                <p class="text-charcoal max-w-2xl mx-auto">
-                    如初春之苗，不见其增，日有所长
-                </p>
+                <span class="text-xs font-semibold tracking-[0.2em] block mb-3" style="color:var(--color-vermilion)">卷二 · 学记</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4" style="color:var(--color-ink)">求学之路</h2>
+                <p class="max-w-lg mx-auto" style="color:var(--color-charcoal)">如初春之苗，不见其增，日有所长</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center scroll-reveal scroll-delay-1">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-jade/20 to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
-                        <span class="text-2xl handwriting text-jade">基</span>
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(178,44,44,0.06)">
+                        <span class="text-xl handwriting" style="color:var(--color-vermilion)">基</span>
                     </div>
-                    <h3 class="font-bold text-ink mb-3">基础筑实</h3>
-                    <div class="space-y-2 text-sm text-charcoal">
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>HTML/CSS</span>
-                            <span class="text-xs text-jade">· 掌握</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>JavaScript</span>
-                            <span class="text-xs text-jade">· 学习</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>Git</span>
-                            <span class="text-xs text-jade">· 入门</span>
-                        </div>
+                    <h3 class="font-bold mb-3" style="color:var(--color-ink)">基础筑实</h3>
+                    <div class="space-y-2 text-sm" style="color:var(--color-charcoal)">
+                        <div>HTML / CSS <span class="text-xs" style="color:var(--color-vermilion)">· 掌握</span></div>
+                        <div>JavaScript <span class="text-xs" style="color:var(--color-vermilion)">· 学习</span></div>
+                        <div>Git <span class="text-xs" style="color:var(--color-vermilion)">· 入门</span></div>
                     </div>
                 </div>
-
                 <div class="text-center scroll-reveal scroll-delay-2">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-vermilion/20 to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
-                        <span class="text-2xl handwriting text-vermilion">进</span>
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(44,44,44,0.05)">
+                        <span class="text-xl handwriting" style="color:var(--color-charcoal)">进</span>
                     </div>
-                    <h3 class="font-bold text-ink mb-3">正在探索</h3>
-                    <div class="space-y-2 text-sm text-charcoal">
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>前端框架</span>
-                            <span class="text-xs text-vermilion">· React/Vue</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>响应式设计</span>
-                            <span class="text-xs text-vermilion">· 实践</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>UI/UX 原理</span>
-                            <span class="text-xs text-vermilion">· 了解</span>
-                        </div>
+                    <h3 class="font-bold mb-3" style="color:var(--color-ink)">正在探索</h3>
+                    <div class="space-y-2 text-sm" style="color:var(--color-charcoal)">
+                        <div>前端框架 <span class="text-xs" style="color:var(--color-charcoal)">· React / Vue</span></div>
+                        <div>响应式设计 <span class="text-xs" style="color:var(--color-charcoal)">· 实践</span></div>
+                        <div>UI/UX 原理 <span class="text-xs" style="color:var(--color-charcoal)">· 了解</span></div>
                     </div>
                 </div>
-
                 <div class="text-center scroll-reveal scroll-delay-3">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-charcoal/20 to-transparent flex items-center justify-center mx-auto mb-6 classical-shadow ink-blot">
-                        <span class="text-2xl handwriting text-charcoal">望</span>
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(44,44,44,0.05)">
+                        <span class="text-xl handwriting" style="color:var(--color-charcoal)">望</span>
                     </div>
-                    <h3 class="font-bold text-ink mb-3">未来方向</h3>
-                    <div class="space-y-2 text-sm text-charcoal">
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>全栈开发</span>
-                            <span class="text-xs text-charcoal">· 目标</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>性能优化</span>
-                            <span class="text-xs text-charcoal">· 深入</span>
-                        </div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span>开源贡献</span>
-                            <span class="text-xs text-charcoal">· 期待</span>
-                        </div>
+                    <h3 class="font-bold mb-3" style="color:var(--color-ink)">未来方向</h3>
+                    <div class="space-y-2 text-sm" style="color:var(--color-charcoal)">
+                        <div>全栈开发 <span class="text-xs">· 目标</span></div>
+                        <div>性能优化 <span class="text-xs">· 深入</span></div>
+                        <div>开源贡献 <span class="text-xs">· 期待</span></div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-20 scroll-reveal">
-                <div class="bg-gradient-to-b from-paper/98 to-paper/96 rounded-xl p-8 classical-shadow border border-charcoal/10">
-                    <h3 class="text-lg font-bold text-ink mb-6 flex items-center">
-                        <span class="w-6 h-6 rounded-full bg-jade opacity-20 mr-2"></span>
-                        学习随想
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="mt-16 scroll-reveal">
+                <div class="rounded-xl p-7 classical-shadow" style="background:linear-gradient(to bottom, rgba(253,251,247,0.98), rgba(253,251,247,0.95));border:1px solid rgba(44,44,44,0.06)">
+                    <h3 class="font-bold mb-5" style="color:var(--color-ink)">学习随想</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-4">
                             <div class="flex items-start space-x-3">
-                                <span class="text-jade text-xl mt-1">〰</span>
+                                <span class="mt-0.5" style="color:var(--color-vermilion)">〰</span>
                                 <div>
-                                    <div class="font-medium text-ink">理解优先于记忆</div>
-                                    <div class="text-sm text-charcoal opacity-80 mt-1">代码背后的原理比语法更重要</div>
+                                    <div class="font-medium text-sm" style="color:var(--color-ink)">理解优先于记忆</div>
+                                    <div class="text-xs mt-1" style="color:var(--color-charcoal);opacity:0.7">代码背后的原理比语法更重要</div>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-3">
-                                <span class="text-jade text-xl mt-1">〰</span>
+                                <span class="mt-0.5" style="color:var(--color-vermilion)">〰</span>
                                 <div>
-                                    <div class="font-medium text-ink">小步快跑</div>
-                                    <div class="text-sm text-charcoal opacity-80 mt-1">每天进步一点点，积跬步以至千里</div>
+                                    <div class="font-medium text-sm" style="color:var(--color-ink)">小步快跑</div>
+                                    <div class="text-xs mt-1" style="color:var(--color-charcoal);opacity:0.7">每天进步一点点，积跬步以至千里</div>
                                 </div>
                             </div>
                         </div>
                         <div class="space-y-4">
                             <div class="flex items-start space-x-3">
-                                <span class="text-jade text-xl mt-1">〰</span>
+                                <span class="mt-0.5" style="color:var(--color-vermilion)">〰</span>
                                 <div>
-                                    <div class="font-medium text-ink">实践出真知</div>
-                                    <div class="text-sm text-charcoal opacity-80 mt-1">亲手写代码是最好的学习方式</div>
+                                    <div class="font-medium text-sm" style="color:var(--color-ink)">实践出真知</div>
+                                    <div class="text-xs mt-1" style="color:var(--color-charcoal);opacity:0.7">亲手写代码是最好的学习方式</div>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-3">
-                                <span class="text-jade text-xl mt-1">〰</span>
+                                <span class="mt-0.5" style="color:var(--color-vermilion)">〰</span>
                                 <div>
-                                    <div class="font-medium text-ink">保持好奇</div>
-                                    <div class="text-sm text-charcoal opacity-80 mt-1">对新技术保持开放心态</div>
+                                    <div class="font-medium text-sm" style="color:var(--color-ink)">保持好奇</div>
+                                    <div class="text-xs mt-1" style="color:var(--color-charcoal);opacity:0.7">对新技术保持开放心态</div>
                                 </div>
                             </div>
                         </div>
@@ -470,212 +283,319 @@
         </section>
 
         <!-- 卷三·雅趣 -->
-        <section id="interests" class="defer-render max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 scroll-reveal">
-                <div class="md:w-2/3">
-                    <span class="text-xs font-bold tracking-widest text-vermilion uppercase block mb-3">卷三·雅趣</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink mb-4">技术之外的天地</h2>
-                    <p class="text-charcoal">
-                        代码之外，亦有诗书茶画，风月闲情
+        <section id="interests" class="defer-render max-w-[1000px] mx-auto px-6 py-24" style="border-top:1px solid rgba(44,44,44,0.06)">
+            <!-- 标题区 -->
+            <div class="text-center mb-6 scroll-reveal">
+                <span class="text-xs font-semibold tracking-[0.2em] block mb-3" style="color:var(--color-vermilion)">卷三 · 雅趣</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-3" style="color:var(--color-ink)">技术之外的天地</h2>
+                <p style="color:var(--color-charcoal)">代码之外，亦有诗书茶画，风月闲情</p>
+            </div>
+
+            <!-- 小引 -->
+            <div class="max-w-xl mx-auto text-center mb-20 scroll-reveal">
+                <div class="py-6 px-8 rounded-xl" style="background:rgba(44,44,44,0.02);border:1px dashed rgba(44,44,44,0.1)">
+                    <p class="text-sm leading-[2]" style="color:var(--color-charcoal);font-style:italic">
+                        终日与逻辑为伴，亦不忘向山水问心。<br>
+                        键盘之外，有墨痕、有茶烟、有书卷气。<br>
+                        此卷所录，皆闲时之趣，不足为外人道，然自得其乐。
                     </p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-gradient-to-br from-paper/96 to-paper/92 rounded-xl p-6 classical-shadow border border-charcoal/10 hover-lift scroll-reveal">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-vermilion/15 to-transparent flex items-center justify-center mb-4">
-                        <span class="text-xl handwriting text-vermilion">书</span>
+            <!-- 书·养气 -->
+            <div class="mb-20 scroll-reveal">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="handwriting text-2xl" style="color:var(--color-vermilion)">书</span>
+                    <div>
+                        <h3 class="text-xl font-bold" style="color:var(--color-ink)">养气</h3>
+                        <p class="text-xs" style="color:var(--color-charcoal)">诗书养气，最是静心</p>
                     </div>
-                    <h3 class="font-bold text-ink mb-2">古典文学</h3>
-                    <p class="text-sm text-charcoal opacity-80">
-                        诗词歌赋，古文观止，在文字间感受千年文脉
-                    </p>
                 </div>
 
-                <div class="bg-gradient-to-br from-paper/96 to-paper/92 rounded-xl p-6 classical-shadow border border-charcoal/10 hover-lift scroll-reveal scroll-delay-1">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-jade/15 to-transparent flex items-center justify-center mb-4">
-                        <span class="text-xl handwriting text-jade">墨</span>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    <div class="md:col-span-3 space-y-4">
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            少时读《古文观止》，最爱《赤壁赋》中"惟江上之清风，与山间之明月"一句，觉天地辽阔，物我两忘。及长，涉猎渐广，从《诗经》的草木虫鱼，到唐宋诗词的四季流转，再到明清小品的闲适清言，每有会意，便觉千年文脉不过咫尺。
+                        </p>
+                        <!-- 书目表 -->
+                        <div class="rounded-lg overflow-hidden" style="border:1px solid rgba(44,44,44,0.08)">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr style="background:rgba(44,44,44,0.03)">
+                                        <th class="text-left px-4 py-2.5 font-semibold text-xs" style="color:var(--color-ink)">类别</th>
+                                        <th class="text-left px-4 py-2.5 font-semibold text-xs" style="color:var(--color-ink)">书目</th>
+                                        <th class="text-left px-4 py-2.5 font-semibold text-xs hidden sm:table-cell" style="color:var(--color-ink)">偶得</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color:var(--color-charcoal)">
+                                    <tr style="border-top:1px solid rgba(44,44,44,0.06)">
+                                        <td class="px-4 py-2.5 text-xs whitespace-nowrap">古典文学</td>
+                                        <td class="px-4 py-2.5 text-xs">《古文观止》《世说新语》《诗经》</td>
+                                        <td class="px-4 py-2.5 text-xs hidden sm:table-cell">读《世说》，知魏晋风流</td>
+                                    </tr>
+                                    <tr style="border-top:1px solid rgba(44,44,44,0.06);background:rgba(44,44,44,0.015)">
+                                        <td class="px-4 py-2.5 text-xs whitespace-nowrap">诗词</td>
+                                        <td class="px-4 py-2.5 text-xs">苏轼、陶渊明、王维</td>
+                                        <td class="px-4 py-2.5 text-xs hidden sm:table-cell">东坡之旷达，最合程序员修养</td>
+                                    </tr>
+                                    <tr style="border-top:1px solid rgba(44,44,44,0.06)">
+                                        <td class="px-4 py-2.5 text-xs whitespace-nowrap">思想</td>
+                                        <td class="px-4 py-2.5 text-xs">《道德经》《庄子》《传习录》</td>
+                                        <td class="px-4 py-2.5 text-xs hidden sm:table-cell">"无用之用"，创造力的源头</td>
+                                    </tr>
+                                    <tr style="border-top:1px solid rgba(44,44,44,0.06);background:rgba(44,44,44,0.015)">
+                                        <td class="px-4 py-2.5 text-xs whitespace-nowrap">杂览</td>
+                                        <td class="px-4 py-2.5 text-xs">博尔赫斯、卡尔维诺、建筑美学</td>
+                                        <td class="px-4 py-2.5 text-xs hidden sm:table-cell">在异域文字里，寻另一种时空</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-ink mb-2">传统美学</h3>
-                    <p class="text-sm text-charcoal opacity-80">
-                        书法、绘画、园林，东方美学的现代表达
-                    </p>
+                    <div class="md:col-span-2 flex flex-col gap-4">
+                        <div class="rounded-xl p-5 classical-shadow flex-1" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="text-xs px-2 py-0.5 rounded" style="background:rgba(178,44,44,0.08);color:var(--color-vermilion)">近读</span>
+                            </div>
+                            <h4 class="font-bold text-sm mb-1" style="color:var(--color-ink)">《陶庵梦忆》</h4>
+                            <p class="text-xs" style="color:var(--color-charcoal)">张岱 — 晚明小品，字字清冽，如饮山泉。</p>
+                        </div>
+                        <!-- 照片占位按钮 -->
+                        <button onclick="togglePhoto('photo-books')" class="rounded-xl p-5 w-full text-left transition-all hover:opacity-80" style="background:rgba(44,44,44,0.03);border:1px dashed rgba(44,44,44,0.12)">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 flex-shrink-0" style="color:var(--color-charcoal);opacity:0.4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <div>
+                                    <div class="text-xs font-medium" style="color:var(--color-charcoal)">查看书影 / 读书笔记</div>
+                                    <div class="text-xs" style="color:var(--color-charcoal);opacity:0.5">点击展开照片</div>
+                                </div>
+                            </div>
+                            <div id="photo-books" class="hidden mt-4">
+                                <div class="rounded-lg overflow-hidden" style="background:rgba(44,44,44,0.04);min-height:120px;display:flex;align-items:center;justify-content:center">
+                                    <p class="text-xs p-4 text-center" style="color:var(--color-charcoal);opacity:0.5">在此处放入你的照片<br><span class="opacity-60">&lt;img src="your-photo.jpg"&gt;</span></p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 墨·栖心 -->
+            <div class="mb-20 scroll-reveal">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="handwriting text-2xl" style="color:var(--color-vermilion)">墨</span>
+                    <div>
+                        <h3 class="text-xl font-bold" style="color:var(--color-ink)">栖心</h3>
+                        <p class="text-xs" style="color:var(--color-charcoal)">东方美学，是另一种逻辑</p>
+                    </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-paper/96 to-paper/92 rounded-xl p-6 classical-shadow border border-charcoal/10 hover-lift scroll-reveal scroll-delay-2">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-charcoal/15 to-transparent flex items-center justify-center mb-4">
-                        <span class="text-xl handwriting text-charcoal">思</span>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    <div class="md:col-span-2 order-2 md:order-1 flex flex-col gap-4">
+                        <div class="rounded-xl p-5 classical-shadow flex-1" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="text-xs px-2 py-0.5 rounded" style="background:rgba(178,44,44,0.08);color:var(--color-vermilion)">近日</span>
+                            </div>
+                            <div class="space-y-3 text-xs" style="color:var(--color-charcoal)">
+                                <div class="flex items-start space-x-2">
+                                    <span style="color:var(--color-vermilion)">·</span>
+                                    <span>临《兰亭序》第二十七遍（每次都有新悟）</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span style="color:var(--color-vermilion)">·</span>
+                                    <span>计划探访苏州拙政园（体味"移步换景"的空间叙事）</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 照片占位按钮 -->
+                        <button onclick="togglePhoto('photo-ink')" class="rounded-xl p-5 w-full text-left transition-all hover:opacity-80" style="background:rgba(44,44,44,0.03);border:1px dashed rgba(44,44,44,0.12)">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 flex-shrink-0" style="color:var(--color-charcoal);opacity:0.4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <div>
+                                    <div class="text-xs font-medium" style="color:var(--color-charcoal)">查看书法练习</div>
+                                    <div class="text-xs" style="color:var(--color-charcoal);opacity:0.5">点击展开照片</div>
+                                </div>
+                            </div>
+                            <div id="photo-ink" class="hidden mt-4">
+                                <div class="rounded-lg overflow-hidden" style="background:rgba(44,44,44,0.04);min-height:120px;display:flex;align-items:center;justify-content:center">
+                                    <p class="text-xs p-4 text-center" style="color:var(--color-charcoal);opacity:0.5">在此处放入你的照片<br><span class="opacity-60">&lt;img src="your-photo.jpg"&gt;</span></p>
+                                </div>
+                            </div>
+                        </button>
                     </div>
-                    <h3 class="font-bold text-ink mb-2">哲学思考</h3>
-                    <p class="text-sm text-charcoal opacity-80">
-                        中西方哲学，技术伦理，数字时代的人文关怀
-                    </p>
+                    <div class="md:col-span-3 order-1 md:order-2 space-y-4">
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            书法初学颜真卿，后慕赵孟頫之秀逸。临帖时，一笔一画，心神俱静，恍若与古人隔空对谈。虽未成气候，然笔墨之间，自有法度与自由并存的妙趣。
+                        </p>
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            绘画偏爱文人山水，尤喜倪瓒"逸笔草草，不求形似"的境界。园林则取法苏州，一峰则太华千仞，一勺则江湖万里，以小见大的智慧，何尝不是架构设计的真谛？
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 思·问道 -->
+            <div class="mb-20 scroll-reveal">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="handwriting text-2xl" style="color:var(--color-vermilion)">思</span>
+                    <div>
+                        <h3 class="text-xl font-bold" style="color:var(--color-ink)">问道</h3>
+                        <p class="text-xs" style="color:var(--color-charcoal)">技术的尽头，往往是哲学</p>
+                    </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-paper/96 to-paper/92 rounded-xl p-6 classical-shadow border border-charcoal/10 hover-lift scroll-reveal scroll-delay-3">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-vermilion/15 to-transparent flex items-center justify-center mb-4">
-                        <span class="text-xl handwriting text-vermilion">创</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            写代码时，会想起老子的"凿户牖以为室，当其无，有室之用"——软件的架构，亦是在"有"与"无"之间寻找平衡。
+                        </p>
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            读康德时，会联想起图灵测试：什么是"物自体"？机器能有"先验综合判断"吗？这些问题或许无解，但追问的过程本身，就是思维的拓展。
+                        </p>
                     </div>
-                    <h3 class="font-bold text-ink mb-2">创意实验</h3>
-                    <p class="text-sm text-charcoal opacity-80">
-                        将古典元素融入现代界面设计，探索文化传承的新形式
-                    </p>
+                    <div class="space-y-3">
+                        <p class="text-xs font-semibold mb-3" style="color:var(--color-ink);letter-spacing:0.1em">常常缠绕我的问题</p>
+                        <div class="space-y-3">
+                            <div class="rounded-lg p-4" style="background:rgba(44,44,44,0.02);border-left:2px solid var(--color-vermilion)">
+                                <p class="text-xs leading-relaxed" style="color:var(--color-charcoal)">当大模型生成一首"像李白"的诗，它是在模仿，还是在"创作"？</p>
+                            </div>
+                            <div class="rounded-lg p-4" style="background:rgba(44,44,44,0.02);border-left:2px solid var(--color-vermilion)">
+                                <p class="text-xs leading-relaxed" style="color:var(--color-charcoal)">技术是中性的，但技术人的选择呢？</p>
+                            </div>
+                            <div class="rounded-lg p-4" style="background:rgba(44,44,44,0.02);border-left:2px solid var(--color-vermilion)">
+                                <p class="text-xs leading-relaxed" style="color:var(--color-charcoal)">快时代里，如何保持"慢思考"的能力？</p>
+                            </div>
+                        </div>
+                        <p class="text-xs mt-4 italic" style="color:var(--color-charcoal);opacity:0.6">每一次叩问，都让代码多一层人文的底色。</p>
+                    </div>
                 </div>
+            </div>
+
+            <!-- 创·游艺 -->
+            <div class="mb-16 scroll-reveal">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="handwriting text-2xl" style="color:var(--color-vermilion)">创</span>
+                    <div>
+                        <h3 class="text-xl font-bold" style="color:var(--color-ink)">游艺</h3>
+                        <p class="text-xs" style="color:var(--color-charcoal)">将古人的智慧，译作今日的界面</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    <div class="md:col-span-3 space-y-4">
+                        <p class="text-sm leading-[2]" style="color:var(--color-charcoal)">
+                            做个人网站时，试着把"新中式"的审美转化为可交互的体验：用留白代替边框，让呼吸感成为设计语言；用宣纸色作为背景，替代冰冷的纯白；用楷体与宋体的搭配，模拟古籍排版的节奏。页面滚动如手卷徐徐展开，一轴一轴，渐次呈现。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="text-xs px-2.5 py-1 rounded-md" style="background:rgba(178,44,44,0.06);color:var(--color-vermilion)">诗词意象 → UI 动效</span>
+                            <span class="text-xs px-2.5 py-1 rounded-md" style="background:rgba(178,44,44,0.06);color:var(--color-vermilion)">宋代版刻 → CSS 排版</span>
+                            <span class="text-xs px-2.5 py-1 rounded-md" style="background:rgba(178,44,44,0.06);color:var(--color-vermilion)">AI 中式插画</span>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="rounded-xl p-5 classical-shadow h-full" style="background:linear-gradient(135deg, rgba(253,251,247,0.95), rgba(253,251,247,0.9));border:1px solid rgba(44,44,44,0.06)">
+                            <p class="text-sm leading-[2] handwriting text-center" style="color:var(--color-ink)">
+                                "技可进乎道，<br>艺可通乎神。"
+                            </p>
+                            <p class="text-xs text-center mt-3" style="color:var(--color-charcoal)">
+                                所谓"创"，不过是用今人之手，<br>接续古人之心。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卷尾 -->
+            <div class="scroll-reveal text-center py-8" style="border-top:1px solid rgba(44,44,44,0.06)">
+                <p class="text-sm leading-[2]" style="color:var(--color-charcoal);font-style:italic">
+                    此卷所录，皆为闲笔。<br>
+                    若君读罢，觉清风徐来，会心一笑，<br>
+                    便是吾之幸事。
+                </p>
             </div>
         </section>
 
         <!-- 卷末·尺素 -->
-        <section id="contact" class="defer-render max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
-            <div class="relative rounded-2xl overflow-hidden classical-shadow p-8 sm:p-12 bg-gradient-to-b from-paper/98 to-paper/96" style="border:1px solid color-mix(in oklch, var(--color-charcoal) 15%, transparent)">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold tracking-widest text-jade uppercase block mb-3">卷末·尺素</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink mb-6">
-                        有朋自远方来，<span class="handwriting text-vermilion">不亦乐乎</span>
-                    </h2>
-                    <p class="text-charcoal mb-10 max-w-2xl mx-auto">
-                        若你也对古典美学与现代技术的结合感兴趣，或想交流学习心得，欢迎来信。
-                        虽为后学，愿与君共论数字时代的文心雕龙。
-                    </p>
-                    <a href="mailto:djw20040913@qq.com" class="inline-flex items-center justify-center px-8 py-4 bg-ink text-paper font-semibold rounded-lg hover-lift classical-shadow group ink-blot">
-                        <span>展笺致意</span>
-                        <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        <section id="contact" class="defer-render max-w-[1000px] mx-auto px-6 py-24 text-center" style="border-top:1px solid rgba(44,44,44,0.06)">
+            <div class="relative rounded-2xl classical-shadow p-8 sm:p-12 scroll-reveal" style="background:linear-gradient(to bottom, rgba(253,251,247,0.98), rgba(253,251,247,0.95));border:1px solid rgba(44,44,44,0.06)">
+                <span class="text-xs font-semibold tracking-[0.2em] block mb-3" style="color:var(--color-vermilion)">卷末 · 尺素</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-5" style="color:var(--color-ink)">
+                    有朋自远方来，<span class="handwriting" style="color:var(--color-vermilion)">不亦乐乎</span>
+                </h2>
+                <p class="mb-10 max-w-lg mx-auto" style="color:var(--color-charcoal)">
+                    若你也对古典美学与现代技术的结合感兴趣，或想交流学习心得，欢迎联系。
+                </p>
+
+                <!-- 联系方式三列 -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+                    <!-- 邮箱 -->
+                    <a href="mailto:djw20040913@qq.com" class="contact-card group flex items-center gap-3 px-6 py-4 rounded-xl transition-all hover-lift" style="background:rgba(44,44,44,0.03);border:1px solid rgba(44,44,44,0.06);min-width:200px">
+                        <svg class="w-5 h-5 shrink-0" style="color:var(--color-vermilion)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
+                        <div class="text-left">
+                            <div class="text-xs" style="color:var(--color-charcoal)">邮箱</div>
+                            <div class="text-sm font-medium" style="color:var(--color-ink)">djw20040913@qq.com</div>
+                        </div>
+                    </a>
+
+                    <!-- 微信（点击复制） -->
+                    <button onclick="copyWechat()" id="wechat-btn" class="contact-card group flex items-center gap-3 px-6 py-4 rounded-xl transition-all hover-lift cursor-pointer" style="background:rgba(44,44,44,0.03);border:1px solid rgba(44,44,44,0.06);min-width:200px">
+                        <svg class="w-5 h-5 shrink-0" style="color:var(--color-vermilion)" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.697 3.626-1.932 5.916.186.556.476 1.068.845 1.516-1.163-.14-2.266-.5-3.262-1.082a.756.756 0 00-.67.012l-1.538.9a.263.263 0 01-.135.044.237.237 0 01-.233-.237c0-.058.023-.115.038-.172l.318-1.197a.477.477 0 00-.172-.536C4.553 14.79 3.632 13.1 3.632 11.262c0-.143.012-.285.032-.425 1.05 2.09 3.43 3.628 6.283 3.628.456 0 .903-.042 1.338-.124a8.32 8.32 0 003.478-1.556c1.58-1.2 2.637-2.862 2.878-4.728v-.199zm-2.998.904c.52 0 .94.428.94.955s-.42.955-.94.955a.947.947 0 01-.94-.955c0-.527.42-.955.94-.955zm4.694 0c.52 0 .94.428.94.955s-.42.955-.94.955a.947.947 0 01-.94-.955c0-.527.42-.955.94-.955z"/>
+                        </svg>
+                        <div class="text-left">
+                            <div class="text-xs" style="color:var(--color-charcoal)">微信</div>
+                            <div class="text-sm font-medium" style="color:var(--color-ink)" id="wechat-id-text">daijw200409</div>
+                        </div>
+                    </button>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/daijw20040913" class="contact-card group flex items-center gap-3 px-6 py-4 rounded-xl transition-all hover-lift" style="background:rgba(44,44,44,0.03);border:1px solid rgba(44,44,44,0.06);min-width:200px">
+                        <svg class="w-5 h-5 shrink-0" style="color:var(--color-vermilion)" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <div class="text-left">
+                            <div class="text-xs" style="color:var(--color-charcoal)">GitHub</div>
+                            <div class="text-sm font-medium" style="color:var(--color-ink)">daijw20040913</div>
+                        </div>
                     </a>
                 </div>
 
-                <div class="absolute top-4 right-4 opacity-20">
-                    <div class="text-xs monospace-cn rotate-12">飞鸿传书</div>
+                <!-- 复制成功提示 -->
+                <div id="wechat-toast" class="hidden text-xs py-2 px-4 rounded-full inline-block" style="background:var(--color-vermilion);color:#fff">
+                    微信号已复制，请打开微信添加
                 </div>
             </div>
 
-            <address class="mt-12 flex justify-center space-x-8 not-italic">
-                <a href="https://github.com/djw20040913" class="text-charcoal hover:text-ink transition-colors flex items-center space-x-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://djw20040913.github.io" class="text-charcoal hover:text-ink transition-colors flex items-center space-x-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                    </svg>
-                    <span>个人页</span>
-                </a>
-            </address>
+            <!-- 结语 -->
+            <p class="mt-12 text-sm italic max-w-md mx-auto scroll-reveal" style="color:var(--color-charcoal);opacity:0.7">
+                "青山不改，绿水长流。" 愿与诸君共勉。
+            </p>
         </section>
     </main>
 
-    <footer class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-charcoal/10 text-sm text-charcoal opacity-70">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0 flex items-center space-x-2">
-                <div class="w-5 h-5 rounded-full bg-gradient-to-br from-vermilion to-jade opacity-30"></div>
-                <span>theodore · 癸卯年冬 于书斋</span>
+    <footer class="max-w-[1000px] mx-auto px-6 py-10 text-sm" style="border-top:1px solid rgba(44,44,44,0.06);color:var(--color-charcoal)">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs text-white" style="background:linear-gradient(135deg, #b22c2c, #2c2c2c)">墨</span>
+                <span style="opacity:0.7">theodore &copy; 2026</span>
             </div>
-            <div class="text-xs opacity-60">
-                以代码续文脉，用技术传雅韵
+            <div class="flex items-center gap-6" style="opacity:0.5">
+                <span>以代码续文脉</span>
+                <span>&middot;</span>
+                <span>用技术传雅韵</span>
             </div>
+            <a href="#" class="text-xs flex items-center gap-1 transition-colors hover:opacity-100" style="color:var(--color-charcoal);opacity:0.6" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                回到顶部
+            </a>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrolls = document.querySelectorAll('.scroll-reveal');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            scrolls.forEach(scroll => observer.observe(scroll));
-
-            const inkBlots = document.querySelectorAll('.ink-blot');
-            inkBlots.forEach(blot => {
-                blot.addEventListener('mouseenter', () => {
-                    blot.style.transform = 'scale(1.02)';
-                });
-                blot.addEventListener('mouseleave', () => {
-                    blot.style.transform = 'scale(1)';
-                });
-            });
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            const brushStrokes = document.querySelectorAll('.brush-stroke');
-            brushStrokes.forEach(stroke => {
-                stroke.addEventListener('mouseenter', () => {
-                    stroke.style.letterSpacing = '1px';
-                });
-                stroke.addEventListener('mouseleave', () => {
-                    stroke.style.letterSpacing = 'normal';
-                });
-            });
-        });
-
-        // 水墨晕染 — 延迟启动，避免与 LCP 竞争资源
-        function initInkWash() {
-            const c = document.createElement('canvas');
-            Object.assign(c.style, {
-                position: 'fixed', inset: '0', width: '100%', height: '100%',
-                zIndex: '1', pointerEvents: 'none'
-            });
-            document.body.prepend(c);
-            const ctx = c.getContext('2d');
-
-            let W, H, mx = -100, my = -100, px = -100, py = -100;
-            const resize = () => { W = c.width = innerWidth; H = c.height = innerHeight; };
-            addEventListener('resize', resize);
-            resize();
-
-            addEventListener('mousemove', e => { px = mx; py = my; mx = e.clientX; my = e.clientY; });
-
-            function frame() {
-                ctx.fillStyle = 'oklch(98% 0.01 80 / 0.15)';
-                ctx.fillRect(0, 0, W, H);
-
-                if (mx > 0 && Math.hypot(mx - px, my - py) > 3) {
-                    const steps = Math.min(Math.ceil(Math.hypot(mx - px, my - py) / 3), 20);
-                    for (let i = 0; i <= steps; i++) {
-                        const t = i / steps;
-                        const x = px + (mx - px) * t, y = py + (my - py) * t;
-                        const r = 20 + Math.random() * 30;
-                        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-                        g.addColorStop(0, 'oklch(20% 0.02 250 / 0.06)');
-                        g.addColorStop(0.5, 'oklch(20% 0.02 250 / 0.025)');
-                        g.addColorStop(1, 'oklch(20% 0.02 250 / 0)');
-                        ctx.fillStyle = g;
-                        ctx.beginPath();
-                        ctx.arc(x, y, r, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-                requestAnimationFrame(frame);
-            }
-            frame();
-        }
-        // LCP 完成后再启动水墨动画
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(initInkWash, { timeout: 3000 });
-        } else {
-            setTimeout(initInkWash, 2000);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
