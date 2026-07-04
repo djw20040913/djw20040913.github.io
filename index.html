@@ -6,10 +6,15 @@
     <title>theodore · 墨香书斋</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
 
-    <!-- 引入古风字体 -->
+    <!-- 预加载 LCP 关键资源 -->
+    <link rel="preload" href="background.png" as="image" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500;600;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <!-- LCP 关键字体：阻塞加载以确保 LCP 文本尽快渲染 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap">
+    <!-- 非关键字体延迟加载 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+QingKe+HuangYou&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+QingKe+HuangYou&display=swap"></noscript>
 
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -181,6 +186,12 @@
             color: var(--color-ink);
             opacity: 0.8;
         }
+
+        /* 视口外区域延迟渲染，减少首屏工作量 */
+        .defer-render {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
+        }
     </style>
 </head>
 <body class="paper-texture">
@@ -269,7 +280,7 @@
         </section>
 
         <!-- 卷一·自叙 -->
-        <section id="about" class="max-w-4xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
+        <section id="about" class="defer-render max-w-4xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
             <div class="flex items-start justify-between mb-12 scroll-reveal">
                 <div>
                     <span class="text-xs font-bold tracking-widest text-vermilion uppercase block mb-3">卷一·自叙</span>
@@ -340,7 +351,7 @@
         </section>
 
         <!-- 卷二·学记 -->
-        <section id="learning" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
+        <section id="learning" class="defer-render max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
             <div class="text-center mb-16 scroll-reveal">
                 <span class="text-xs font-bold tracking-widest text-jade uppercase block mb-3">卷二·学记</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-ink mb-6">求学之路</h2>
@@ -459,7 +470,7 @@
         </section>
 
         <!-- 卷三·雅趣 -->
-        <section id="interests" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
+        <section id="interests" class="defer-render max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-charcoal/10">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 scroll-reveal">
                 <div class="md:w-2/3">
                     <span class="text-xs font-bold tracking-widest text-vermilion uppercase block mb-3">卷三·雅趣</span>
@@ -514,7 +525,7 @@
         </section>
 
         <!-- 卷末·尺素 -->
-        <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
+        <section id="contact" class="defer-render max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
             <div class="relative rounded-2xl overflow-hidden classical-shadow p-8 sm:p-12 bg-gradient-to-b from-paper/98 to-paper/96" style="border:1px solid color-mix(in oklch, var(--color-charcoal) 15%, transparent)">
                 <div class="relative z-10">
                     <span class="text-xs font-bold tracking-widest text-jade uppercase block mb-3">卷末·尺素</span>
@@ -618,8 +629,8 @@
             });
         });
 
-        // 水墨晕染 — 鼠标移动给背景上色
-        (function inkWash() {
+        // 水墨晕染 — 延迟启动，避免与 LCP 竞争资源
+        function initInkWash() {
             const c = document.createElement('canvas');
             Object.assign(c.style, {
                 position: 'fixed', inset: '0', width: '100%', height: '100%',
@@ -658,7 +669,13 @@
                 requestAnimationFrame(frame);
             }
             frame();
-        })();
+        }
+        // LCP 完成后再启动水墨动画
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initInkWash, { timeout: 3000 });
+        } else {
+            setTimeout(initInkWash, 2000);
+        }
     </script>
 </body>
 </html>
